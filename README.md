@@ -4,7 +4,9 @@
 - to enhance your knowledge in Object Oriented Programming
 - best practices to make a flexible and maintainable code
   ## description problem
-we try to manage the student marks given by different teachers in a specific module. each **student** is characterized by :
+we try to manage the student marks given by different teachers in a specific module. 
+
+each **student** is characterized by :
 - id (auto increment)
 - full Name student
 - date of birth
