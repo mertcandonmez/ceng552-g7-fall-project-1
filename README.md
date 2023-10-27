@@ -44,9 +44,9 @@ from the above description we create five packages, each one has  classes that d
 - package 4 teacher
 - package 5 mark
 
-![content packages](screenshot_1.PNG)
+![content packages](screenshot_1.JPG)
 
 ## testing samples
 
-![input samples](screenshot_2.PNG)
+![input samples](screenshot_2.JPG)
 
