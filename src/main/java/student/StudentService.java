@@ -5,17 +5,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentService implements StudentRepository{
-    List<Student>listStudent;
+public class StudentService implements StudentRepository {
+    List<Student> listStudent;
 
     public StudentService() {
         listStudent = new ArrayList<>();
     }
 
     @Override
-    public void saveStudent(Integer id,String fullName
-            , LocalDate dateOfBirth, Group group) {
-        Student student= new Student(id,fullName,dateOfBirth,group);
+    public void saveStudent(Integer id, String fullName, LocalDate dateOfBirth, Group group) {
+        Student student = new Student(id, fullName, dateOfBirth, group);
         listStudent.add(student);
     }
 
@@ -27,19 +26,16 @@ public class StudentService implements StudentRepository{
 
     @Override
     public Student findById(Integer id) {
-
-
         return listStudent.get(id);
     }
 
     @Override
-    public void updateStudent(Integer id, String fullName
-            , LocalDate dateOfBirth, Group group) {
-        Student student=findById(id);
+    public void updateStudent(Integer id, String fullName, LocalDate dateOfBirth, Group group) {
+        Student student = findById(id);
         student.setGroup(group);
         student.setDateBirth(dateOfBirth);
         student.setFullName(fullName);
-        listStudent.set(id,student);
+        listStudent.set(id, student);
 
     }
 

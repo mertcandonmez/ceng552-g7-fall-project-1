@@ -1,7 +1,7 @@
 package student;
+
 import group.Group;
 import java.time.LocalDate;
-
 
 public class Student {
     private Integer id;
@@ -9,9 +9,8 @@ public class Student {
     private LocalDate dateBirth;
     private Group group;
 
-
-    public Student(Integer id,String fullName, LocalDate dateBirth, Group group) {
-        this.id=id;
+    public Student(Integer id, String fullName, LocalDate dateBirth, Group group) {
+        this.id = id;
         this.fullName = fullName;
         this.dateBirth = dateBirth;
         this.group = group;

@@ -13,15 +13,13 @@ public class Teacher {
     private List<Group> listGroup;
 
     public Teacher(Integer id, String fullName,
-                   Grade grade, List<Module> listModules, List<Group> listGroups) {
+            Grade grade, List<Module> listModules, List<Group> listGroups) {
         this.id = id;
         this.fullName = fullName;
         this.grade = grade;
         this.listModules = listModules;
         this.listGroup = listGroups;
     }
-
-
 
     @Override
     public String toString() {
