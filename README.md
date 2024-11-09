@@ -1,3 +1,8 @@
+# CENG552: Fall Project 1
+Task: Completed and Write Unit Tests to this report 
+
+The codes written in the forked repo do not belong to us. As homework, we made the forked code executable and used testing techniques to write unit tests on it and measure branch coverage. The following explanations are the explanations of the original repo.
+
 # student Marks Management Project
 
 ## the objectives project
