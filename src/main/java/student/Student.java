@@ -32,13 +32,25 @@ public class Student {
         return group;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public LocalDate getDateBirth() {
+        return dateBirth;
+    }
+
     @Override
     public String toString() {
         return "Student{" +
-                "id=" + id +
-                ", fullName='" + fullName + '\'' +
-                ", dateBirth=" + dateBirth +
-                ", group=" + group +
+                "id=" + getId() +
+                ", fullName='" + getFullName() + '\'' +
+                ", dateBirth=" + getDateBirth() +
+                ", group=" + getGroup().toString() +
                 '}';
     }
 

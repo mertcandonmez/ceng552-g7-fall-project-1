@@ -20,7 +20,8 @@ public class StudentService implements StudentRepository {
 
     @Override
     public void deleteStudent(Integer idStudent) {
-        listStudent.remove(idStudent);
+        listStudent.removeIf(student -> student.getId() == idStudent);
+        // listStudent.remove(idStudent);
 
     }
 

@@ -14,6 +14,12 @@ public class GroupService implements GroupRepository {
 
     @Override
     public void saveGroup(GroupName reference) {
+        if (reference == null) {
+            throw new IllegalArgumentException("Group reference cannot be null");
+        }
+        if (findByReference(reference.toString()) != null) {
+            throw new IllegalArgumentException("Group with the same reference already exists");
+        }
         Group group = new Group(reference);
         listGroups.add(group);
     }
@@ -25,33 +31,43 @@ public class GroupService implements GroupRepository {
 
     @Override
     public Group findByReference(String reference) {
+        if (reference == null) {
+            throw new IllegalArgumentException("Group reference cannot be null");
+        }
         Integer index = findIndex(reference);
-        if (index != null)
+        if (index != null) {
             return listGroups.get(index);
-        else return null;
+        } else {
+            return null;
+        }
     }
 
     @Override
     public void updateNumberOfStudent(List<Student> listStudents) {
-        for (int i = 0; i < listGroups.size(); i++) {
+        if (listStudents == null) {
+            throw new IllegalArgumentException("Student list cannot be null");
+        }
+        for (Group group : listGroups) {
             int count = 0;
-            String ref = listGroups.get(i).getReference().toString();
-            Integer index = findIndex(ref);
-            for (int j = 0; j < listStudents.size(); j++) {
-                if (ref.equalsIgnoreCase(listStudents.get(j)
-                        .getGroup().getReference().toString()))
+            String ref = group.getReference().toString();
+            for (Student student : listStudents) {
+                if (student.getGroup() != null && ref.equalsIgnoreCase(student.getGroup().getReference().toString())) {
                     count++;
+                }
             }
-            listGroups.get(index).setNumberStudent(count);
+            group.setNumberStudent(count);
         }
     }
 
     private Integer findIndex(String reference) {
+        if (reference == null) {
+            throw new IllegalArgumentException("Group reference cannot be null");
+        }
         for (int i = 0; i < listGroups.size(); i++) {
-            if (listGroups.get(i).getReference().toString().equalsIgnoreCase(reference))
+            if (listGroups.get(i).getReference().toString().equalsIgnoreCase(reference)) {
                 return i;
+            }
         }
         return null;
     }
-
 }
