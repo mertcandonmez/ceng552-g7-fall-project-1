@@ -33,9 +33,15 @@ public class ModuleService implements ModuleRepository{
 
     private Integer findIndex(String reference) {
         for (int i = 0; i < listModules.size(); i++) {
-            if(listModules.get(i).getReference().toString().equalsIgnoreCase(reference))
+            Module module = listModules.get(i);
+            // Check if both reference and module.getReference() are non-null before calling toString()
+            if (module.getReference() != null && reference != null 
+                    && module.getReference().toString().equalsIgnoreCase(reference)) {
                 return i;
+            }
         }
-        return null;}
+        return null;
+    }
+
     }
 
