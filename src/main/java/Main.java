@@ -90,14 +90,14 @@ public class Main {
         teacherService = new TeacherService();
 
         for (int i = 0; i < fullNames.length; i++) {
-            List<Group> listGroups = new ArrayList();
+            List<Group> listGroups = new ArrayList<Group>();
             Integer length = nameGroup[i].length;
             for (int j = 0; j < length; j++) {
                 Group group = groupService.findByReference(nameGroup[i][j].toString());
                 listGroups.add(group);
 
             }
-            List<Module> listModules = new ArrayList();
+            List<Module> listModules = new ArrayList<Module>();
             length = moduleName[i].length;
             for (int j = 0; j < length; j++) {
 

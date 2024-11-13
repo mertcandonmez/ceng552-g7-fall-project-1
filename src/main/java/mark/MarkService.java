@@ -11,7 +11,7 @@ public class MarkService implements MarkRepository {
     List<Mark> listMarks;
 
     public MarkService() {
-        this.listMarks = new ArrayList();
+        this.listMarks = new ArrayList<Mark>();
     }
 
     @Override
