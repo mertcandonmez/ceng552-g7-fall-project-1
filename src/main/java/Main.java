@@ -72,9 +72,8 @@ public class Main {
         Integer[] notes = { 15, 11, 10 };
         markService = new MarkService();
         for (int i = 0; i < idStudent.length; i++) {
-            // -1 because the index list starts from 0
-            Integer idx = idStudent[i] - 1;
-            Student student = studentService.findById(idx);
+            Integer studentId = idStudent[i];
+            Student student = studentService.findById(studentId);
             Module module = moduleService.findByReference(refModule[i].toString());
             markService.createMark(student, notes[i], module);
 
@@ -123,12 +122,6 @@ public class Main {
         }
     }
 
-    private static void showGroups(List<Group> listGroup) {
-        for (Group group : listGroup) {
-            System.out.println(group);
-        }
-    }
-
     private static void showModules(List<Module> listModule) {
         for (Module module : listModule) {
             System.out.println(module);
@@ -154,7 +147,6 @@ public class Main {
         String fullNames[] = { "sofian gasb", "amine kaci", "hamid jebri", "hanane safi" };
         LocalDate dateOfBirth[] = { LocalDate.of(2000, 1, 8), LocalDate.of(1999, 5, 11), LocalDate.of(1997, 10, 26),
                 LocalDate.of(1995, 10, 26) };
-        Integer[] numberHours = { 40, 35, 28, 25 };
         GroupName[] nameGroup = { GroupName.MIAD, GroupName.MSIA, GroupName.MIAD, GroupName.MSIR };
         studentService = new StudentService();
         for (int i = 0; i < fullNames.length; i++) {

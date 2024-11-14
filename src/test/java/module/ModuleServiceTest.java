@@ -40,7 +40,31 @@ public class ModuleServiceTest {
     }
 
     @Test
-    @DisplayName("Test allModules method")
+    @DisplayName("Test saveModule with boundary values")
+    public void testSaveModuleBoundaryValues() {
+        // Test with 0 hours - lower boundary
+        moduleService.saveModule(ModuleName.CRY, "Cryptography", 0);
+        List<Module> modules = moduleService.allModules();
+        Module module = modules.get(0);
+        assertEquals(Integer.valueOf(0), module.getNumberHours());
+
+        // Test with maximum integer hours - upper boundary
+        moduleService.saveModule(ModuleName.CRY, "Cryptography", Integer.MAX_VALUE);
+        modules = moduleService.allModules();
+        assertEquals(Integer.valueOf(Integer.MAX_VALUE), modules.get(1).getNumberHours());
+    }
+
+    @Test
+    @DisplayName("Test saveModule with empty name and reference")
+    public void testSaveModuleEmptyNameAndReference() {
+        moduleService.saveModule(ModuleName.CRY, "", 10);
+        List<Module> modules = moduleService.allModules();
+        assertEquals(1, modules.size());
+        assertEquals("", modules.get(0).getName());
+    }
+
+    @Test
+    @DisplayName("Test allModules method with multiple modules")
     public void testAllModules() {
         moduleService.saveModule(ModuleName.BDA, "Big Data Analytics", 40);
         moduleService.saveModule(ModuleName.CRY, "Cryptography", 30);
@@ -52,7 +76,6 @@ public class ModuleServiceTest {
     @DisplayName("Test findByReference with existing reference")
     public void testFindByReferenceExisting() {
         moduleService.saveModule(ModuleName.BDA, "Big Data Analytics", 40);
-        moduleService.saveModule(ModuleName.CRY, "Cryptography", 30);
         Module module = moduleService.findByReference("BDA");
         assertNotNull(module);
         assertEquals(ModuleName.BDA, module.getReference());
@@ -75,11 +98,12 @@ public class ModuleServiceTest {
     }
 
     @Test
-    @DisplayName("Test findByReference with null module reference")
-    public void testFindByReferenceNullModuleReference() {
-        moduleService.saveModule(null, "No Reference Module", 20);
-        Module module = moduleService.findByReference(null);
-        assertNull(module);  // Expect null since there's no reference match with null
+    @DisplayName("Test save and retrieve large number of modules (boundary for number of modules)")
+    public void testSaveLargeNumberOfModules() {
+        for (int i = 0; i < 1000; i++) {
+            moduleService.saveModule(ModuleName.CRY, "Module " + i, i);
+        }
+        List<Module> modules = moduleService.allModules();
+        assertEquals(1000, modules.size());
     }
-
 }

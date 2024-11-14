@@ -39,6 +39,26 @@ public class ModuleTest {
     }
 
     @Test
+    @DisplayName("Test constructor with boundary values")
+    public void testConstructorBoundaryValues() {
+        // Testing with 0 hours
+        Module module = new Module(reference, name, 0);
+        assertEquals(Integer.valueOf(0), module.getNumberHours());
+
+        // Testing with maximum integer hours
+        module = new Module(reference, name, Integer.MAX_VALUE);
+        assertEquals(Integer.valueOf(Integer.MAX_VALUE), module.getNumberHours());
+    }
+
+    @Test
+    @DisplayName("Test constructor with empty name and reference")
+    public void testConstructorEmptyNameAndReference() {
+        Module module = new Module(ModuleName.CRY, "", 10);
+        assertEquals("", module.getName());
+        assertEquals(ModuleName.CRY, module.getReference());
+    }
+
+    @Test
     @DisplayName("Test getter methods")
     public void testGetMethods() {
         Module module = new Module(reference, name, numberHours);
