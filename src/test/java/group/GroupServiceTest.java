@@ -226,7 +226,8 @@ public class GroupServiceTest {
     // Update the method source to include the null case
     private static Stream<Arguments> provideStudentLists() {
         Student studentWithGroup = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
-        // Student studentWithoutGroup = new Student(2, "Jane Smith", LocalDate.of(1999, 5, 15), null);
+        // Student studentWithoutGroup = new Student(2, "Jane Smith", LocalDate.of(1999,
+        // 5, 15), null);
 
         List<Student> validList = new ArrayList<>();
         validList.add(studentWithGroup);

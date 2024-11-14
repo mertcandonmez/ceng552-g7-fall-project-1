@@ -20,21 +20,62 @@ class StudentServiceTest {
         studentService.saveStudent(1, "John Doe", LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
     }
 
-    // Testing SaveStudent Method with Boundary Values and Typical Cases
+    // Boundary Value Tests for the `saveStudent` method parameters
     @Test
-    void testSaveStudent_MinBoundary() {
-        assertTrue(studentService.allStudents().isEmpty(), "List should be empty initially");
+    void testSaveStudent_BoundaryId() {
+        // Minimum boundary for ID
+        studentService.saveStudent(1, "Min Id", LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
+        assertEquals(1, studentService.findById(1).getId(), "ID should match minimum boundary value");
 
-        studentService.saveStudent(1, "John Doe", LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
-        assertEquals(1, studentService.allStudents().size(), "List should contain 1 student after adding");
+        // Typical value just above the minimum boundary
+        studentService.saveStudent(2, "Next Min Id", LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
+        assertEquals(2, studentService.findById(2).getId(), "ID should match just above minimum boundary");
+
+        // High boundary example (assuming Integer.MAX_VALUE as upper limit)
+        studentService.saveStudent(Integer.MAX_VALUE, "Max Id", LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
+        assertEquals(Integer.MAX_VALUE, studentService.findById(Integer.MAX_VALUE).getId(),
+                "ID should match maximum boundary value");
     }
 
     @Test
-    void testSaveStudent_MaxBoundary() {
-        for (int i = 2; i <= 100; i++) {
-            studentService.saveStudent(i, "Student " + i, LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
-        }
-        assertEquals(100, studentService.allStudents().size(), "List should contain 100 students at max boundary");
+    void testSaveStudent_BoundaryFullName() {
+        // Boundary for fullName length, assuming non-empty is required
+        studentService.saveStudent(3, "A", LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
+        assertEquals("A", studentService.findById(3).getFullName(), "Full name should match single character boundary");
+
+        // Typical longer name at upper boundary (assuming 255 characters as a limit, if
+        // applicable)
+        String longName = "A".repeat(255);
+        studentService.saveStudent(4, longName, LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
+        assertEquals(longName, studentService.findById(4).getFullName(), "Full name should match long boundary value");
+    }
+
+    @Test
+    void testSaveStudent_BoundaryDateOfBirth() {
+        // Test minimum possible date, e.g., a very early historical date
+        LocalDate minDate = LocalDate.of(1900, 1, 1);
+        studentService.saveStudent(5, "Old Student", minDate, new Group(GroupName.MSIR));
+        assertEquals(minDate, studentService.findById(5).getDateBirth(),
+                "Date of birth should match minimum boundary date");
+
+        // Typical date at upper boundary (e.g., current date)
+        LocalDate currentDate = LocalDate.now();
+        studentService.saveStudent(6, "New Student", currentDate, new Group(GroupName.MSIR));
+        assertEquals(currentDate, studentService.findById(6).getDateBirth(),
+                "Date of birth should match upper boundary date");
+    }
+
+    @Test
+    void testSaveStudent_BoundaryGroup() {
+        // Minimum boundary with a valid group
+        Group groupMin = new Group(GroupName.MSIR);
+        studentService.saveStudent(7, "Student Min Group", LocalDate.of(2000, 1, 1), groupMin);
+        assertEquals(groupMin, studentService.findById(7).getGroup(), "Group should match minimum valid boundary");
+
+        // Another typical valid boundary case (switching to another valid group)
+        Group groupMax = new Group(GroupName.MIAD);
+        studentService.saveStudent(8, "Student Max Group", LocalDate.of(2000, 1, 1), groupMax);
+        assertEquals(groupMax, studentService.findById(8).getGroup(), "Group should match maximum valid boundary");
     }
 
     @Test
