@@ -71,4 +71,5 @@ class StudentTest {
         String expected = "Student{id=1, fullName='John Doe', dateBirth=2000-01-01, group=Group{reference=MSIR , number student=0}}";
         assertEquals(expected, student.toString(), "toString output should match expected format");
     }
+
 }
