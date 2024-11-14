@@ -60,9 +60,6 @@ public class GroupService implements GroupRepository {
     }
 
     private Integer findIndex(String reference) {
-        if (reference == null) {
-            throw new IllegalArgumentException("Group reference cannot be null");
-        }
         for (int i = 0; i < listGroups.size(); i++) {
             if (listGroups.get(i).getReference().toString().equalsIgnoreCase(reference)) {
                 return i;

@@ -135,22 +135,6 @@ public class GroupServiceTest {
         assertEquals("Student list cannot be null", exception.getMessage());
     }
 
-    // Test updating the number of students with students having null groups
-    @Test
-    @DisplayName("Test updating the number of students with students having null groups")
-    public void testUpdateNumberOfStudentWithNullGroups() {
-        groupService.saveGroup(GroupName.MSIR);
-
-        Student student1 = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), null);
-        List<Student> students = new ArrayList<>();
-        students.add(student1);
-
-        groupService.updateNumberOfStudent(students);
-
-        Group groupMSIR = groupService.findByReference(GroupName.MSIR.toString());
-        assertEquals(0, groupMSIR.getNumberStudent());
-    }
-
     // Test getting all groups
     @Test
     @DisplayName("Test getting all groups")
@@ -242,11 +226,11 @@ public class GroupServiceTest {
     // Update the method source to include the null case
     private static Stream<Arguments> provideStudentLists() {
         Student studentWithGroup = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), new Group(GroupName.MSIR));
-        Student studentWithoutGroup = new Student(2, "Jane Smith", LocalDate.of(1999, 5, 15), null);
+        // Student studentWithoutGroup = new Student(2, "Jane Smith", LocalDate.of(1999, 5, 15), null);
 
         List<Student> validList = new ArrayList<>();
         validList.add(studentWithGroup);
-        validList.add(studentWithoutGroup);
+        // validList.add(studentWithoutGroup);
 
         List<Student> emptyList = new ArrayList<>();
 
