@@ -1,9 +1,8 @@
 package module;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Before;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 public class ModuleTest {
 
@@ -11,7 +10,7 @@ public class ModuleTest {
     private String name;
     private Integer numberHours;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         reference = ModuleName.BDA;
         name = "Big Data Analytics";
@@ -19,7 +18,6 @@ public class ModuleTest {
     }
 
     @Test
-    @DisplayName("Test constructor with valid parameters")
     public void testConstructorValid() {
         Module module = new Module(reference, name, numberHours);
         assertNotNull(module);
@@ -29,7 +27,6 @@ public class ModuleTest {
     }
 
     @Test
-    @DisplayName("Test constructor with null parameters")
     public void testConstructorWithNullParameters() {
         Module module = new Module(null, null, null);
         assertNotNull(module);
@@ -39,7 +36,6 @@ public class ModuleTest {
     }
 
     @Test
-    @DisplayName("Test constructor with boundary values")
     public void testConstructorBoundaryValues() {
         // Testing with 0 hours
         Module module = new Module(reference, name, 0);
@@ -51,7 +47,6 @@ public class ModuleTest {
     }
 
     @Test
-    @DisplayName("Test constructor with empty name and reference")
     public void testConstructorEmptyNameAndReference() {
         Module module = new Module(ModuleName.CRY, "", 10);
         assertEquals("", module.getName());
@@ -59,7 +54,6 @@ public class ModuleTest {
     }
 
     @Test
-    @DisplayName("Test getter methods")
     public void testGetMethods() {
         Module module = new Module(reference, name, numberHours);
         assertEquals(reference, module.getReference());
@@ -68,7 +62,6 @@ public class ModuleTest {
     }
 
     @Test
-    @DisplayName("Test toString method")
     public void testToString() {
         Module module = new Module(reference, name, numberHours);
         String expected = "Module{reference=" + reference + ", name='" + name + "', numberHours=" + numberHours + "}";

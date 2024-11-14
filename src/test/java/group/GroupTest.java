@@ -1,12 +1,9 @@
 package group;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.*;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
 /**
  * Test class for Group.
@@ -19,76 +16,124 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class GroupTest {
 
-    private Group group;
+	private Group group;
 
-    @BeforeEach
-    public void setUp() {
-        group = new Group(GroupName.MSIR);
-    }
+	@Before
+	public void setUp() {
+		group = new Group(GroupName.MSIR);
+	}
 
-    // Test for the constructor with valid reference
-    @Test
-    @DisplayName("Test constructor with valid reference")
-    public void testConstructorValid() {
-        assertEquals(GroupName.MSIR, group.getReference());
-        assertEquals(0, group.getNumberStudent());
-    }
+	// Test constructor with valid reference
+	@Test
+	public void testConstructorValid() {
+		assertEquals(GroupName.MSIR, group.getReference());
+		assertEquals(Integer.valueOf(0), group.getNumberStudent());
+	}
 
-    // Test for the constructor with null reference
-    @Test
-    @DisplayName("Test constructor with null reference")
-    public void testConstructorNullReference() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            new Group(null);
-        });
-        assertEquals("Group reference cannot be null", exception.getMessage());
-    }
+	// Test constructor with null reference
+	@Test
+	public void testConstructorNullReference() {
+		Exception exception = null;
+		try {
+			new Group(null);
+		} catch (IllegalArgumentException e) {
+			exception = e;
+		}
+		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
+		assertEquals("Group reference cannot be null", exception.getMessage());
+	}
 
-    // Parameterized test for setting a valid number of students (Equivalence
-    // Partitioning)
-    @ParameterizedTest
-    @ValueSource(ints = { 0, 1, 10, 100 })
-    @DisplayName("Test setting valid number of students")
-    public void testSetNumberStudentValid(int numberStudent) {
-        group.setNumberStudent(numberStudent);
-        assertEquals(numberStudent, group.getNumberStudent());
-    }
+	// Test setting valid number of students: 0
+	@Test
+	public void testSetNumberStudentZero() {
+		group.setNumberStudent(0);
+		assertEquals(Integer.valueOf(0), group.getNumberStudent());
+	}
 
-    // Parameterized test for setting an invalid number of students (Boundary Value
-    // Analysis)
-    @ParameterizedTest
-    @ValueSource(ints = { -1, -10, -100 })
-    @DisplayName("Test setting negative number of students")
-    public void testSetNumberStudentNegative(int numberStudent) {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            group.setNumberStudent(numberStudent);
-        });
-        assertEquals("Number of students cannot be negative", exception.getMessage());
-    }
+	// Test setting valid number of students: 1
+	@Test
+	public void testSetNumberStudentOne() {
+		group.setNumberStudent(1);
+		assertEquals(Integer.valueOf(1), group.getNumberStudent());
+	}
 
-    // Test for setting null as the number of students
-    @Test
-    @DisplayName("Test setting null number of students")
-    public void testSetNumberStudentNull() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            group.setNumberStudent(null);
-        });
-        assertEquals("Number of students cannot be null", exception.getMessage());
-    }
+	// Test setting valid number of students: 10
+	@Test
+	public void testSetNumberStudentTen() {
+		group.setNumberStudent(10);
+		assertEquals(Integer.valueOf(10), group.getNumberStudent());
+	}
 
-    // Test for the toString method
-    @Test
-    @DisplayName("Test toString method")
-    public void testToString() {
-        String expected = "Group{reference=MSIR}";
-        assertEquals(expected, group.toString());
-    }
+	// Test setting valid number of students: 100
+	@Test
+	public void testSetNumberStudentHundred() {
+		group.setNumberStudent(100);
+		assertEquals(Integer.valueOf(100), group.getNumberStudent());
+	}
 
-    // Test for the showGroup method
-    @Test
-    @DisplayName("Test showGroup method")
-    public void testShowGroup() {
-        String expected = "Group{reference=MSIR , number student=0}";
-        assertEquals(expected, group.showGroup());
-    }
+	// Test setting invalid (negative) number of students: -1
+	@Test
+	public void testSetNumberStudentNegativeOne() {
+		Exception exception = null;
+		try {
+			group.setNumberStudent(-1);
+		} catch (IllegalArgumentException e) {
+			exception = e;
+		}
+		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
+		assertEquals("Number of students cannot be negative", exception.getMessage());
+	}
+
+	// Test setting invalid (negative) number of students: -10
+	@Test
+	public void testSetNumberStudentNegativeTen() {
+		Exception exception = null;
+		try {
+			group.setNumberStudent(-10);
+		} catch (IllegalArgumentException e) {
+			exception = e;
+		}
+		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
+		assertEquals("Number of students cannot be negative", exception.getMessage());
+	}
+
+	// Test setting invalid (negative) number of students: -100
+	@Test
+	public void testSetNumberStudentNegativeHundred() {
+		Exception exception = null;
+		try {
+			group.setNumberStudent(-100);
+		} catch (IllegalArgumentException e) {
+			exception = e;
+		}
+		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
+		assertEquals("Number of students cannot be negative", exception.getMessage());
+	}
+
+	// Test setting null as the number of students
+	@Test
+	public void testSetNumberStudentNull() {
+		Exception exception = null;
+		try {
+			group.setNumberStudent(null);
+		} catch (IllegalArgumentException e) {
+			exception = e;
+		}
+		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
+		assertEquals("Number of students cannot be null", exception.getMessage());
+	}
+
+	// Test toString method
+	@Test
+	public void testToString() {
+		String expected = "Group{reference=MSIR}";
+		assertEquals(expected, group.toString());
+	}
+
+	// Test showGroup method
+	@Test
+	public void testShowGroup() {
+		String expected = "Group{reference=MSIR , number student=0}";
+		assertEquals(expected, group.showGroup());
+	}
 }

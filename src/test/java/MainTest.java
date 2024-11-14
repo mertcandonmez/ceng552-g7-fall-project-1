@@ -3,23 +3,22 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 
 public class MainTest {
 
     @Test
-    @DisplayName("Test main method output")
     public void testMainMethodOutput() {
         
-        Main main = new Main();
+        
         // Capture the output
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outputStream));
 
         // Run the main method
-        main.main(null);
+        Main.main(null);
 
         // Restore the original System.out
         System.setOut(originalOut);

@@ -23,7 +23,7 @@ public class MarkService implements MarkRepository {
             throw new IllegalArgumentException("Module cannot be null");
         }
         if (mark == null || !isValid(mark)) {
-            throw new MarkException("invalid mark, it should be between 5 and 20");
+            throw new MarkException("Invalid mark, it should be between 5 and 20");
         }
         Mark markObj = new Mark(student, mark, module);
         listMarks.add(markObj);

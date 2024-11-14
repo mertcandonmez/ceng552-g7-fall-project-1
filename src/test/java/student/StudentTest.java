@@ -1,86 +1,114 @@
 package student;
 
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.Assert.*;
 import group.Group;
 import group.GroupName;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class StudentTest {
 
-class StudentTest {
+        @Test
+        public void testConstructor_ValidInput() {
+                Group group = new Group(GroupName.MSIR);
+                Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group);
 
-    @Test
-    @DisplayName("Constructor with valid input values should create Student correctly")
-    void testConstructor_ValidInput() {
-        Group group = new Group(GroupName.MSIR);
-        Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group);
+                assertEquals("ID should match", 1, student.getId().intValue());
+                assertEquals("Full name should match", "John Doe", student.getFullName());
+                assertEquals("Date of birth should match", LocalDate.of(2000, 1, 1), student.getDateBirth());
+                assertEquals("Group should match", group, student.getGroup());
+        }
 
-        assertEquals(1, student.getId());
-        assertEquals("John Doe", student.getFullName());
-        assertEquals(LocalDate.of(2000, 1, 1), student.getDateBirth());
-        assertEquals(group, student.getGroup());
-    }
+        @Test
+        public void testConstructor_NullChecks() {
+                Group group = new Group(GroupName.MSIR);
+                LocalDate dob = LocalDate.of(2000, 1, 1);
 
-    @Test
-    @DisplayName("Constructor should throw NullPointerException for null parameters")
-    void testConstructor_NullChecks() {
-        Group group = new Group(GroupName.MSIR);
-        LocalDate dob = LocalDate.of(2000, 1, 1);
+                try {
+                        new Student(null, "John Doe", dob, group);
+                        fail("Should throw exception for null ID");
+                } catch (NullPointerException e) {
+                        // Expected exception
+                }
 
-        assertThrows(NullPointerException.class, () -> new Student(null, "John Doe", dob, group),
-                "Should throw exception for null ID");
-        assertThrows(NullPointerException.class, () -> new Student(1, null, dob, group),
-                "Should throw exception for null full name");
-        assertThrows(NullPointerException.class, () -> new Student(1, "John Doe", null, group),
-                "Should throw exception for null date of birth");
-        assertThrows(NullPointerException.class, () -> new Student(1, "John Doe", dob, null),
-                "Should throw exception for null group");
-    }
+                try {
+                        new Student(1, null, dob, group);
+                        fail("Should throw exception for null full name");
+                } catch (NullPointerException e) {
+                        // Expected exception
+                }
 
-    @Test
-    @DisplayName("Setters should update Student attributes with valid input values")
-    void testSetters_ValidInput() {
-        Group group1 = new Group(GroupName.MSIR);
-        Group group2 = new Group(GroupName.MIAD);
-        Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group1);
+                try {
+                        new Student(1, "John Doe", null, group);
+                        fail("Should throw exception for null date of birth");
+                } catch (NullPointerException e) {
+                        // Expected exception
+                }
 
-        student.setFullName("Jane Doe");
-        student.setDateBirth(LocalDate.of(1999, 2, 15));
-        student.setGroup(group2);
+                try {
+                        new Student(1, "John Doe", dob, null);
+                        fail("Should throw exception for null group");
+                } catch (NullPointerException e) {
+                        // Expected exception
+                }
+        }
 
-        assertEquals("Jane Doe", student.getFullName());
-        assertEquals(LocalDate.of(1999, 2, 15), student.getDateBirth());
-        assertEquals(group2, student.getGroup());
-    }
+        @Test
+        public void testSetters_ValidInput() {
+                Group group1 = new Group(GroupName.MSIR);
+                Group group2 = new Group(GroupName.MIAD);
+                Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group1);
 
-    @Test
-    @DisplayName("Setters should throw NullPointerException for null parameters")
-    void testSetters_NullChecks() {
-        Group group = new Group(GroupName.MSIR);
-        Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group);
+                student.setFullName("Jane Doe");
+                student.setDateBirth(LocalDate.of(1999, 2, 15));
+                student.setGroup(group2);
 
-        assertThrows(NullPointerException.class, () -> student.setFullName(null),
-                "Should throw exception for null full name");
-        assertThrows(NullPointerException.class, () -> student.setDateBirth(null),
-                "Should throw exception for null date of birth");
-        assertThrows(NullPointerException.class, () -> student.setGroup(null), "Should throw exception for null group");
-    }
+                assertEquals("Full name should be updated", "Jane Doe", student.getFullName());
+                assertEquals("Date of birth should be updated", LocalDate.of(1999, 2, 15), student.getDateBirth());
+                assertEquals("Group should be updated", group2, student.getGroup());
+        }
 
-    @Test
-    @DisplayName("toString method should return correctly formatted Student details")
-    void testToString() {
-        Group group = new Group(GroupName.MSIR);
-        Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group);
+        @Test
+        public void testSetters_NullChecks() {
+                Group group = new Group(GroupName.MSIR);
+                Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group);
 
-        String studentString = student.toString();
+                try {
+                        student.setFullName(null);
+                        fail("Should throw exception for null full name");
+                } catch (NullPointerException e) {
+                        // Expected exception
+                }
 
-        assertTrue(studentString.contains("id=1"), "Student string should contain ID");
-        assertTrue(studentString.contains("fullName='John Doe'"), "Student string should contain full name");
-        assertTrue(studentString.contains("dateBirth=2000-01-01"), "Student string should contain date of birth");
-        assertTrue(studentString.contains("group=Group{reference=MSIR"),
-                "Student string should contain group reference");
-    }
+                try {
+                        student.setDateBirth(null);
+                        fail("Should throw exception for null date of birth");
+                } catch (NullPointerException e) {
+                        // Expected exception
+                }
+
+                try {
+                        student.setGroup(null);
+                        fail("Should throw exception for null group");
+                } catch (NullPointerException e) {
+                        // Expected exception
+                }
+        }
+
+        @Test
+        public void testToString() {
+                Group group = new Group(GroupName.MSIR);
+                Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group);
+
+                String studentString = student.toString();
+
+                assertTrue("Student string should contain ID", studentString.contains("id=1"));
+                assertTrue("Student string should contain full name", studentString.contains("fullName='John Doe'"));
+                assertTrue("Student string should contain date of birth",
+                                studentString.contains("dateBirth=2000-01-01"));
+                assertTrue("Student string should contain group reference",
+                                studentString.contains("group=Group{reference=MSIR"));
+        }
 
 }
