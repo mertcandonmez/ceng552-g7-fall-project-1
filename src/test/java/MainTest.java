@@ -11,13 +11,15 @@ public class MainTest {
     @Test
     @DisplayName("Test main method output")
     public void testMainMethodOutput() {
+        
+        Main main = new Main();
         // Capture the output
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         PrintStream originalOut = System.out;
         System.setOut(new PrintStream(outputStream));
 
         // Run the main method
-        Main.main(null);
+        main.main(null);
 
         // Restore the original System.out
         System.setOut(originalOut);
