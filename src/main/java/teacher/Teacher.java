@@ -22,6 +22,26 @@ public class Teacher {
         this.listGroup = Objects.requireNonNull(listGroups, "Groups list cannot be null");
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public Grade getGrade() {
+        return grade;
+    }
+
+    public List<Module> getListModules() {
+        return listModules;
+    }
+
+    public List<Group> getListGroup() {
+        return listGroup;
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +
