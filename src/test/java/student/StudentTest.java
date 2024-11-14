@@ -1,5 +1,6 @@
 package student;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import group.Group;
 import group.GroupName;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class StudentTest {
 
     @Test
+    @DisplayName("Constructor with valid input values should create Student correctly")
     void testConstructor_ValidInput() {
         Group group = new Group(GroupName.MSIR);
         Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group);
@@ -22,6 +24,7 @@ class StudentTest {
     }
 
     @Test
+    @DisplayName("Constructor should throw NullPointerException for null parameters")
     void testConstructor_NullChecks() {
         Group group = new Group(GroupName.MSIR);
         LocalDate dob = LocalDate.of(2000, 1, 1);
@@ -37,6 +40,7 @@ class StudentTest {
     }
 
     @Test
+    @DisplayName("Setters should update Student attributes with valid input values")
     void testSetters_ValidInput() {
         Group group1 = new Group(GroupName.MSIR);
         Group group2 = new Group(GroupName.MIAD);
@@ -52,6 +56,7 @@ class StudentTest {
     }
 
     @Test
+    @DisplayName("Setters should throw NullPointerException for null parameters")
     void testSetters_NullChecks() {
         Group group = new Group(GroupName.MSIR);
         Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group);
@@ -64,6 +69,7 @@ class StudentTest {
     }
 
     @Test
+    @DisplayName("toString method should return correctly formatted Student details")
     void testToString() {
         Group group = new Group(GroupName.MSIR);
         Student student = new Student(1, "John Doe", LocalDate.of(2000, 1, 1), group);
