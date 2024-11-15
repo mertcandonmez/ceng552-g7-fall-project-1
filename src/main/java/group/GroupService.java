@@ -51,7 +51,7 @@ public class GroupService implements GroupRepository {
             int count = 0;
             String ref = group.getReference().toString();
             for (Student student : listStudents) {
-                if (student.getGroup() != null && ref.equalsIgnoreCase(student.getGroup().getReference().toString())) {
+                if (ref.equalsIgnoreCase(student.getGroup().getReference().toString())) {
                     count++;
                 }
             }
