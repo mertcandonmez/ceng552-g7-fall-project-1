@@ -1,13 +1,14 @@
 package mark;
 
 import mark.exception.MarkException;
+import module.Module;
+import module.ModuleName;
 import org.junit.Before;
 import org.junit.Test;
 import student.Student;
-import module.Module;
-import module.ModuleName;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -32,111 +33,38 @@ public class MarkServiceTest {
         when(module.getReference()).thenReturn(ModuleName.BDA);
     }
 
-    // Test creating a mark with valid values
+    // Test creating marks with valid values
     @Test
-    public void testCreateMarkValid5() throws MarkException {
-        markService.createMark(student, 5, module);
-        List<Mark> marks = markService.allMarks();
-        assertEquals(5, marks.get(marks.size() - 1).getMark().intValue());
-    }
+    public void testCreateMarkWithValidValues() throws MarkException {
+        List<Integer> validMarks = Arrays.asList(5, 10, 15, 20);
 
-    @Test
-    public void testCreateMarkValid10() throws MarkException {
-        markService.createMark(student, 10, module);
-        List<Mark> marks = markService.allMarks();
-        assertEquals(10, marks.get(marks.size() - 1).getMark().intValue());
-    }
-
-    @Test
-    public void testCreateMarkValid15() throws MarkException {
-        markService.createMark(student, 15, module);
-        List<Mark> marks = markService.allMarks();
-        assertEquals(15, marks.get(marks.size() - 1).getMark().intValue());
-    }
-
-    @Test
-    public void testCreateMarkValid20() throws MarkException {
-        markService.createMark(student, 20, module);
-        List<Mark> marks = markService.allMarks();
-        assertEquals(20, marks.get(marks.size() - 1).getMark().intValue());
-    }
-
-    // Test creating a mark with invalid values
-    @Test
-    public void testCreateMarkInvalidNull() {
-        Exception exception = null;
-        try {
-            markService.createMark(student, null, module);
-        } catch (MarkException e) {
-            exception = e;
+        for (Integer validMark : validMarks) {
+            markService.createMark(student, validMark, module);
+            List<Mark> marks = markService.allMarks();
+            assertEquals(validMark.intValue(), marks.get(marks.size() - 1).getMark().intValue());
         }
-        assertNotNull("Expected MarkException for null mark", exception);
-        assertEquals("Invalid mark, it should be between 5 and 20", exception.getMessage());
     }
 
+    // Test creating marks with invalid values
     @Test
-    public void testCreateMarkInvalid4() {
-        Exception exception = null;
-        try {
-            markService.createMark(student, 4, module);
-        } catch (MarkException e) {
-            exception = e;
-        }
-        assertNotNull("Expected MarkException for mark less than 5", exception);
-        assertEquals("Invalid mark, it should be between 5 and 20", exception.getMessage());
-    }
+    public void testCreateMarkWithInvalidValues() {
+        List<Integer> invalidMarks = Arrays.asList(null, 4, 21, -1, 0, 25);
 
-    @Test
-    public void testCreateMarkInvalid21() {
-        Exception exception = null;
-        try {
-            markService.createMark(student, 21, module);
-        } catch (MarkException e) {
-            exception = e;
+        for (Integer invalidMark : invalidMarks) {
+            Exception exception = null;
+            try {
+                markService.createMark(student, invalidMark, module);
+            } catch (MarkException e) {
+                exception = e;
+            }
+            assertNotNull("Expected MarkException for invalid mark value: " + invalidMark, exception);
+            assertEquals("Invalid mark, it should be between 5 and 20", exception.getMessage());
         }
-        assertNotNull("Expected MarkException for mark greater than 20", exception);
-        assertEquals("Invalid mark, it should be between 5 and 20", exception.getMessage());
-    }
-
-    @Test
-    public void testCreateMarkInvalidNegative1() {
-        Exception exception = null;
-        try {
-            markService.createMark(student, -1, module);
-        } catch (MarkException e) {
-            exception = e;
-        }
-        assertNotNull("Expected MarkException for negative mark", exception);
-        assertEquals("Invalid mark, it should be between 5 and 20", exception.getMessage());
-    }
-
-    @Test
-    public void testCreateMarkInvalid0() {
-        Exception exception = null;
-        try {
-            markService.createMark(student, 0, module);
-        } catch (MarkException e) {
-            exception = e;
-        }
-        assertNotNull("Expected MarkException for zero mark", exception);
-        assertEquals("Invalid mark, it should be between 5 and 20", exception.getMessage());
-    }
-
-    @Test
-    public void testCreateMarkInvalid25() {
-        Exception exception = null;
-        try {
-            markService.createMark(student, 25, module);
-        } catch (MarkException e) {
-            exception = e;
-        }
-        assertNotNull("Expected MarkException for mark greater than 20", exception);
-        assertEquals("Invalid mark, it should be between 5 and 20", exception.getMessage());
     }
 
     // Test creating a mark with null student
     @Test
-    public void testCreateMarkNullStudent() {
+    public void testCreateMarkWithNullStudent() {
         Exception exception = null;
         try {
             markService.createMark(null, 15, module);
@@ -149,7 +77,7 @@ public class MarkServiceTest {
 
     // Test creating a mark with null module
     @Test
-    public void testCreateMarkNullModule() {
+    public void testCreateMarkWithNullModule() {
         Exception exception = null;
         try {
             markService.createMark(student, 15, null);
@@ -162,7 +90,7 @@ public class MarkServiceTest {
 
     // Test finding marks by null module
     @Test
-    public void testFindMarkByModuleNullModule() {
+    public void testFindMarkByModuleWithNullModule() {
         Exception exception = null;
         try {
             markService.findMarkByModule(null);
@@ -175,23 +103,23 @@ public class MarkServiceTest {
 
     // Test finding marks by valid module
     @Test
-    public void testFindMarkByModuleValid() throws MarkException {
+    public void testFindMarkByValidModule() throws MarkException {
         markService.createMark(student, 15, module);
         List<Mark> marks = markService.findMarkByModule(module);
-        assertFalse(marks.isEmpty());
+        assertFalse("Expected non-empty marks list", marks.isEmpty());
         assertEquals(15, marks.get(0).getMark().intValue());
     }
 
-    // Test find marks by module with no marks
+    // Test finding marks by module with no marks
     @Test
-    public void testFindMarkByModuleNoMarks() {
+    public void testFindMarkByModuleWithNoMarks() {
         List<Mark> marks = markService.findMarkByModule(module);
         assertTrue("Expected empty marks list", marks.isEmpty());
     }
 
     // Test bestMarkByModule with null module
     @Test
-    public void testBestMarkByModuleNullModule() {
+    public void testBestMarkByModuleWithNullModule() {
         Exception exception = null;
         try {
             markService.bestMarkByModule(null);
@@ -202,9 +130,9 @@ public class MarkServiceTest {
         assertEquals("Module cannot be null", exception.getMessage());
     }
 
-    // Test bestMarkByModule with marks
+    // Test bestMarkByModule with multiple marks
     @Test
-    public void testBestMarkByModuleWithMarks() throws MarkException {
+    public void testBestMarkByModuleWithMultipleMarks() throws MarkException {
         Student student1 = mock(Student.class);
         when(student1.getFullName()).thenReturn("Student 1");
 
@@ -215,24 +143,24 @@ public class MarkServiceTest {
         markService.createMark(student2, 18, module);
 
         Student bestStudent = markService.bestMarkByModule(module);
-        assertNotNull(bestStudent);
+        assertNotNull("Expected a best student", bestStudent);
         assertEquals("Student 2", bestStudent.getFullName());
     }
 
+    // Test bestMarkByModule with a single mark
     @Test
-    public void testBestMarkByModuleSingleMark() throws MarkException {
+    public void testBestMarkByModuleWithSingleMark() throws MarkException {
         markService.createMark(student, 12, module);
 
         Student bestStudent = markService.bestMarkByModule(module);
-        assertNotNull(bestStudent);
+        assertNotNull("Expected a best student", bestStudent);
         assertEquals("John Doe", bestStudent.getFullName());
     }
 
     // Test bestMarkByModule with no marks
     @Test
-    public void testBestMarkByModuleNoMarks() {
+    public void testBestMarkByModuleWithNoMarks() {
         Student bestStudent = markService.bestMarkByModule(module);
         assertNull("Expected null best student when no marks are present", bestStudent);
     }
-
 }

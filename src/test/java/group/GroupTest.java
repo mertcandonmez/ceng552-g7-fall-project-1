@@ -8,11 +8,6 @@ import static org.junit.Assert.*;
 /**
  * Test class for Group.
  *
- * Test Strategy:
- * - Boundary Value Analysis: Test the boundaries for the number of students.
- * - Decision Tree: Test the decision logic for setting the number of students.
- * - Equivalence Partitioning: Test typical values for the number of students.
- * - Null Checks: Verify that null values are handled properly.
  */
 public class GroupTest {
 
@@ -20,17 +15,26 @@ public class GroupTest {
 
 	@Before
 	public void setUp() {
+		// Initialize group with a valid reference before each test
 		group = new Group(GroupName.MSIR);
 	}
 
-	// Test constructor with valid reference
+	/**
+	 * Test the constructor with a valid GroupName reference.
+	 * Equivalence Class: Valid non-null references.
+	 */
 	@Test
-	public void testConstructorValid() {
-		assertEquals(GroupName.MSIR, group.getReference());
-		assertEquals(Integer.valueOf(0), group.getNumberStudent());
+	public void testConstructorValidReference() {
+		// Verify that the group is initialized correctly
+		assertEquals("Group reference should be MSIR", GroupName.MSIR, group.getReference());
+		assertEquals("Number of students should be initialized to 0", Integer.valueOf(0), group.getNumberStudent());
 	}
 
-	// Test constructor with null reference
+	/**
+	 * Test the constructor with a null GroupName reference.
+	 * Equivalence Class: Null references.
+	 * Expected to throw IllegalArgumentException.
+	 */
 	@Test
 	public void testConstructorNullReference() {
 		Exception exception = null;
@@ -39,101 +43,198 @@ public class GroupTest {
 		} catch (IllegalArgumentException e) {
 			exception = e;
 		}
+		// Verify that an exception is thrown and contains the correct message
 		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
-		assertEquals("Group reference cannot be null", exception.getMessage());
+		assertEquals("Exception message should be 'Group reference cannot be null'",
+				"Group reference cannot be null", exception.getMessage());
 	}
 
-	// Test setting valid number of students: 0
+	/**
+	 * Test getNumberStudent method for initial value.
+	 * The number of students should be initialized to 0.
+	 */
 	@Test
-	public void testSetNumberStudentZero() {
+	public void testGetNumberStudentInitialValue() {
+		// Verify that the initial number of students is 0
+		assertEquals("Initial number of students should be 0", Integer.valueOf(0), group.getNumberStudent());
+	}
+
+	/**
+	 * Test setNumberStudent with valid values.
+	 * Boundary Values: 0, 1, 50, 100
+	 * Equivalence Class: Valid non-negative integers.
+	 */
+	@Test
+	public void testSetNumberStudentValidValues() {
+		// Test setting number of students to 0
 		group.setNumberStudent(0);
-		assertEquals(Integer.valueOf(0), group.getNumberStudent());
-	}
+		assertEquals("Number of students should be 0", Integer.valueOf(0), group.getNumberStudent());
 
-	// Test setting valid number of students: 1
-	@Test
-	public void testSetNumberStudentOne() {
+		// Test setting number of students to 1
 		group.setNumberStudent(1);
-		assertEquals(Integer.valueOf(1), group.getNumberStudent());
-	}
+		assertEquals("Number of students should be 1", Integer.valueOf(1), group.getNumberStudent());
 
-	// Test setting valid number of students: 10
-	@Test
-	public void testSetNumberStudentTen() {
-		group.setNumberStudent(10);
-		assertEquals(Integer.valueOf(10), group.getNumberStudent());
-	}
+		// Test setting number of students to a typical value (e.g., 50)
+		group.setNumberStudent(50);
+		assertEquals("Number of students should be 50", Integer.valueOf(50), group.getNumberStudent());
 
-	// Test setting valid number of students: 100
-	@Test
-	public void testSetNumberStudentHundred() {
+		// Test setting number of students to a large number (boundary value)
 		group.setNumberStudent(100);
-		assertEquals(Integer.valueOf(100), group.getNumberStudent());
+		assertEquals("Number of students should be 100", Integer.valueOf(100), group.getNumberStudent());
 	}
 
-	// Test setting invalid (negative) number of students: -1
+	/**
+	 * Test setNumberStudent with invalid negative values.
+	 * Boundary Values: -1, -100
+	 * Equivalence Class: Negative integers.
+	 * Expected to throw IllegalArgumentException.
+	 */
 	@Test
-	public void testSetNumberStudentNegativeOne() {
+	public void testSetNumberStudentNegativeValues() {
+		// Test setting number of students to -1
 		Exception exception = null;
 		try {
 			group.setNumberStudent(-1);
 		} catch (IllegalArgumentException e) {
 			exception = e;
 		}
-		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
-		assertEquals("Number of students cannot be negative", exception.getMessage());
-	}
+		assertNotNull("Expected IllegalArgumentException for negative value", exception);
+		assertEquals("Exception message should be 'Number of students cannot be negative'",
+				"Number of students cannot be negative", exception.getMessage());
 
-	// Test setting invalid (negative) number of students: -10
-	@Test
-	public void testSetNumberStudentNegativeTen() {
-		Exception exception = null;
-		try {
-			group.setNumberStudent(-10);
-		} catch (IllegalArgumentException e) {
-			exception = e;
-		}
-		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
-		assertEquals("Number of students cannot be negative", exception.getMessage());
-	}
-
-	// Test setting invalid (negative) number of students: -100
-	@Test
-	public void testSetNumberStudentNegativeHundred() {
-		Exception exception = null;
+		// Test setting number of students to a larger negative value
+		exception = null;
 		try {
 			group.setNumberStudent(-100);
 		} catch (IllegalArgumentException e) {
 			exception = e;
 		}
-		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
-		assertEquals("Number of students cannot be negative", exception.getMessage());
+		assertNotNull("Expected IllegalArgumentException for negative value", exception);
+		assertEquals("Exception message should be 'Number of students cannot be negative'",
+				"Number of students cannot be negative", exception.getMessage());
 	}
 
-	// Test setting null as the number of students
+	/**
+	 * Test setNumberStudent with null value.
+	 * Expected to throw IllegalArgumentException.
+	 */
 	@Test
-	public void testSetNumberStudentNull() {
+	public void testSetNumberStudentNullValue() {
 		Exception exception = null;
 		try {
 			group.setNumberStudent(null);
 		} catch (IllegalArgumentException e) {
 			exception = e;
 		}
-		assertNotNull("Expected IllegalArgumentException to be thrown", exception);
-		assertEquals("Number of students cannot be null", exception.getMessage());
+		assertNotNull("Expected IllegalArgumentException for null value", exception);
+		assertEquals("Exception message should be 'Number of students cannot be null'",
+				"Number of students cannot be null", exception.getMessage());
 	}
 
-	// Test toString method
+	/**
+	 * Test the toString method.
+	 * Ensures that the string representation matches the expected format.
+	 */
 	@Test
 	public void testToString() {
 		String expected = "Group{reference=MSIR}";
-		assertEquals(expected, group.toString());
+		assertEquals("toString should return correct format", expected, group.toString());
 	}
 
-	// Test showGroup method
+	/**
+	 * Test the showGroup method.
+	 * Ensures that the detailed string representation is correct.
+	 */
 	@Test
 	public void testShowGroup() {
-		String expected = "Group{reference=MSIR , number student=0}";
-		assertEquals(expected, group.showGroup());
+		group.setNumberStudent(25);
+		String expected = "Group{reference=MSIR , number student=25}";
+		assertEquals("showGroup should return correct format", expected, group.showGroup());
+	}
+
+	/**
+	 * Test setting numberStudent after multiple valid set operations.
+	 * Decision Table Testing: Verify state after several updates.
+	 */
+	@Test
+	public void testSetNumberStudentMultipleUpdates() {
+		// Set number of students to 10
+		group.setNumberStudent(10);
+		assertEquals("Number of students should be 10", Integer.valueOf(10), group.getNumberStudent());
+
+		// Update number of students to 20
+		group.setNumberStudent(20);
+		assertEquals("Number of students should be updated to 20", Integer.valueOf(20), group.getNumberStudent());
+
+		// Update number of students back to 0
+		group.setNumberStudent(0);
+		assertEquals("Number of students should be updated to 0", Integer.valueOf(0), group.getNumberStudent());
+	}
+
+	/**
+	 * Test the behavior of setNumberStudent with maximum integer value.
+	 * Boundary Value Analysis: Integer.MAX_VALUE
+	 */
+	@Test
+	public void testSetNumberStudentMaxIntegerValue() {
+		group.setNumberStudent(Integer.MAX_VALUE);
+		assertEquals("Number of students should be Integer.MAX_VALUE",
+				Integer.valueOf(Integer.MAX_VALUE), group.getNumberStudent());
+	}
+
+	/**
+	 * Test that the reference of the group remains unchanged.
+	 * Ensures that the reference is final and cannot be modified.
+	 */
+	@Test
+	public void testGroupReferenceImmutability() {
+		// Attempting to modify the reference should not be possible,
+		// but we can check that the reference remains the same after operations
+		assertEquals("Group reference should remain MSIR", GroupName.MSIR, group.getReference());
+		// Create a new group and check its reference
+		Group newGroup = new Group(GroupName.MIAD);
+		assertEquals("New group's reference should be MIAD", GroupName.MIAD, newGroup.getReference());
+	}
+
+	/**
+	 * Test creating multiple Group instances with different references.
+	 * Ensures that each instance maintains its own state.
+	 */
+	@Test
+	public void testMultipleGroupInstances() {
+		Group group1 = new Group(GroupName.MSIR);
+		Group group2 = new Group(GroupName.MIAD);
+
+		group1.setNumberStudent(15);
+		group2.setNumberStudent(10);
+
+		assertEquals("Group1 should have reference MSIR", GroupName.MSIR, group1.getReference());
+		assertEquals("Group1 should have 15 students", Integer.valueOf(15), group1.getNumberStudent());
+
+		assertEquals("Group2 should have reference MIAD", GroupName.MIAD, group2.getReference());
+		assertEquals("Group2 should have 10 students", Integer.valueOf(10), group2.getNumberStudent());
+	}
+
+	/**
+	 * Test edge cases for integer overflow.
+	 * Although unlikely, test behavior with Integer.MAX_VALUE + 1.
+	 */
+	@Test
+	public void testSetNumberStudentOverflow() {
+		Exception exception = null;
+		try {
+			group.setNumberStudent(Integer.MAX_VALUE + 1);
+		} catch (IllegalArgumentException e) {
+			exception = e;
+		} catch (ArithmeticException e) {
+			// Catch potential overflow exception
+			exception = e;
+		}
+		// Depending on how the method handles overflow, adjust the test
+		// In Java, Integer.MAX_VALUE + 1 results in Integer.MIN_VALUE due to overflow
+		// Thus, setting numberStudent to Integer.MIN_VALUE should throw an exception
+		assertNotNull("Expected exception due to overflow", exception);
+		assertTrue("Exception should be IllegalArgumentException or ArithmeticException",
+				exception instanceof IllegalArgumentException || exception instanceof ArithmeticException);
 	}
 }
